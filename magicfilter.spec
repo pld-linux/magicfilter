@@ -33,11 +33,11 @@ make
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{usr/{sbin,man/man8},etc/magicfilter}
 
-make prefix=$RPM_BUILD_ROOT/usr/ bindir=$RPM_BUILD_ROOT/usr/sbin/ install
-install magicfilterconfig $RPM_BUILD_ROOT/usr/sbin/
+make prefix=$RPM_BUILD_ROOT/usr/ bindir=$RPM_BUILD_ROOT%{_sbindir}/ install
+install magicfilterconfig $RPM_BUILD_ROOT%{_sbindir}/
 install filters/*-filter $RPM_BUILD_ROOT/etc/magicfilter
 
-strip $RPM_BUILD_ROOT/usr/sbin/magicfilter
+strip $RPM_BUILD_ROOT%{_sbindir}/magicfilter
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* QuickInst ChangeLog TODO
 
@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {QuickInst,ChangeLog,TODO}.gz
 %dir /etc/magicfilter
 
-%attr(755,root,root) /usr/sbin/*
+%attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %config(noreplace) /etc/magicfilter/*
 %{_mandir}/man*/*
 
