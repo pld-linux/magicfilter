@@ -10,7 +10,7 @@ Source:		%{name}-%{version}.tar.gz
 Patch:		%{name}_1.2-28.diff.gz
 Requires:	lpr
 Obsoletes:	apsfilter
-BuildRoot:   	/tmp/%{name}-%{version}-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
 Magicfilter is a customizable, extensible automatic printer filter.
