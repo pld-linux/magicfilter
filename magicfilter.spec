@@ -67,14 +67,12 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,%{_sysconfdir}/%{name}}
 install magicfilterconfig $RPM_BUILD_ROOT%{_sbindir}
 install filters/*-filter $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 
-gzip -9nf QuickInst ChangeLog TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {QuickInst,ChangeLog,TODO}.gz
+%doc QuickInst ChangeLog TODO
 %dir %{_sysconfdir}/%{name}
 
 %attr(755,root,root) %{_sbindir}/*
