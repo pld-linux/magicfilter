@@ -63,7 +63,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,%{_sysconfdir}/%{name}}
 	DESTDIR=$RPM_BUILD_ROOT \
 	bindir=%{_sbindir} \
 	mandir=%{_mandir}/man8
-	
+
 install magicfilterconfig $RPM_BUILD_ROOT%{_sbindir}
 install filters/*-filter $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 
