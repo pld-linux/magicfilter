@@ -2,15 +2,18 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	4
+Release:	5
 Group:		Utilities/Printing
 Group(pl):	Narzêdzia/Drukowanie
 Copyright:	GPL
 Source:		%{name}-%{version}.tar.gz
-Patch:		%{name}_1.2-28.diff.gz
+Patch0:		magicfilter_1.2-28.diff.gz
+Patch1:		magicfilter-DESTDIR.patch
 Requires:	lpr
 Obsoletes:	apsfilter
 BuildRoot:	/tmp/%{name}-%{version}-root
+
+%define	_sysconfdir	/etc
 
 %description
 Magicfilter is a customizable, extensible automatic printer filter.
@@ -21,25 +24,34 @@ drukarek.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p0
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target_platform} \
-	--prefix=/usr 
+	--prefix=%{_prefix} \
+	--bindir=%{_sbindir} \
+	--mandir=%{_mandir}/man8
+
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{usr/{sbin,man/man8},etc/magicfilter}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,%{_sysconfdir}/%{name}}
 
-make prefix=$RPM_BUILD_ROOT/usr/ bindir=$RPM_BUILD_ROOT%{_sbindir}/ install
-install magicfilterconfig $RPM_BUILD_ROOT%{_sbindir}/
-install filters/*-filter $RPM_BUILD_ROOT/etc/magicfilter
+make install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	bindir=%{_sbindir} \
+	mandir=%{_mandir}/man8
+	
+install magicfilterconfig $RPM_BUILD_ROOT%{_sbindir}
+install filters/*-filter $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 
-strip $RPM_BUILD_ROOT%{_sbindir}/magicfilter
+strip $RPM_BUILD_ROOT%{_sbindir}/%{name}
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* QuickInst ChangeLog TODO
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
+	QuickInst ChangeLog TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -47,30 +59,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {QuickInst,ChangeLog,TODO}.gz
-%dir /etc/magicfilter
+%dir %{_sysconfdir}/%{name}
 
 %attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) %config(noreplace) /etc/magicfilter/*
+%attr(755,root,root) %config(noreplace) %{_sysconfdir}/%{name}/*
 %{_mandir}/man*/*
 
 %changelog
-* Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-  [1.2-4]
-- sloted BuildRoot into PLD standard
-- removed man group from man pages
-- gzipping documentation (instead bzipping)
-
-* Sat Feb 13 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-  [1.2-3d]
-- added patch from Debian
-- rewrited %install
-- few others modifications
-
-* Mon Feb  8 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-  [1.2-2]
-- simpilification in %files
-- removed Copying from %doc (GPL)
-- added gzipping documentation
-
-* Sun Feb  7 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-- initial rpm release
+* Wed Jun 2 1999 Piotr Czerwiñski <pius@pld.org.pl> 
+  [1.2-5]
+- package is FHS 2.0 compliant,
+- spec file written by Micha³ Kuratczyk <kura@pld.org.pl>
+  and Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>.
