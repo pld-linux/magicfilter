@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	5
+Release:	6
 Group:		Applications/Printing
 Group(de):	Applikationen/Drucken
 Group(pl):	Aplikacje/Drukowanie
@@ -10,6 +10,7 @@ License:	GPL
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
 Patch0:		%{name}_1.2-28.diff.gz
 Patch1:		%{name}-DESTDIR.patch
+Patch2:		%{name}-hpdj.patch
 Requires:	lpr
 Obsoletes:	apsfilter
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -25,6 +26,7 @@ drukarek.
 %setup -q
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %build
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
@@ -33,7 +35,7 @@ CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
 	--bindir=%{_sbindir} \
 	--mandir=%{_mandir}/man8
 
-%{__make}
+%{__make} bindir=%{_sbindir}
 
 %install
 rm -rf $RPM_BUILD_ROOT

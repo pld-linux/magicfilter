@@ -1,0 +1,150 @@
+--- magicfilter-1.2/filters/Makefile.in	Wed Jun 21 16:23:46 2000
++++ magicfilter-1.2patch/filters/Makefile.in	Wed Jun 21 16:17:51 2000
+@@ -35,8 +35,8 @@
+ 		cpsonly300-filter  cpsonly400-filter  cpsonly600-filter \
+ 		stylus800-filter   stylus_color_360dpi-filter \
+ 		stylus_color_720dpi-filter \
+-		bj600-filter bj600_draft-filter
+-
++		bj600-filter bj600_draft-filter \
++		hpdj-best-filter   hpdj-econo-filter  hpdj-normal-filter
+ 
+ .SUFFIXES:
+ .SUFFIXES:	.x .xc .h .xh .mh .xt
+@@ -152,3 +152,6 @@
+ stylus800-filter.xc: genericps.mh stdconv.mh stdrejects.mh
+ stylus_color_360dpi-filter.xc: genericps.mh stdconv.mh stdrejects.mh
+ stylus_color_720dpi-filter.xc: genericps.mh stdconv.mh stdrejects.mh
++hpdj-best-filter.xc: genericps.mh stdconv.mh stdrejects.mh
++hpdj-econo-filter.xc: genericps.mh stdconv.mh stdrejects.mh
++hpdj-normal-filter.xc: genericps.mh stdconv.mh stdrejects.mh
+
+--- magicfilter-1.2.orig/filters/hpdj-best-filter.x
++++ magicfilter-1.2/filters/hpdj-best-filter.x
+@@ -0,0 +1,40 @@
++%include <filters.h>
++#
++# Magic filter setup file for HP DeskJet 600 C series color printers with
++# both black and CMY cartridges installed
++#
++# This file has been automatically adapted to your system.
++%ifndef HAVE_GHOSTSCRIPT
++# However, since you didn't have GhostScript installed, most entries
++# are going to be rejects.
++%endif
++#
++/*
++ * Printer resolution
++ */
++%define DPI 300
++%define IS_COLOR 1
++/*
++ * PostScript
++ */
++%ifdef HAVE_GHOSTSCRIPT
++%define HANDLE_PS	filter	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=1 -dRetStatus=1 -dPapertype=0 -sOutputFile=- -
++%define HANDLE_PDF	fpipe	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=1 -dRetStatus=1 -dPapertype=0 -sOutputFile=- $FILE
++%endif
++/*
++ * PCL, PJL
++ */
++%define HANDLE_PCL	cat
++/*
++ * Text
++ */
++%define HANDLE_TEXT     cat     \eE\e&k2G\e(2N\e*o1M  \eE
++%define LATIN1_OK 1
++
++%include <stdconv.mh>
++
++# wild guess: PCL control codes start with <ESC>
++0	\033		HANDLE_PCL
++
++# Default entry -- for normal (text) files.  MUST BE LAST.
++default			HANDLE_TEXT
+--- magicfilter-1.2.orig/filters/hpdj-normal-filter.x
++++ magicfilter-1.2/filters/hpdj-normal-filter.x
+@@ -0,0 +1,40 @@
++%include <filters.h>
++#
++# Magic filter setup file for HP DeskJet 600 C series color printers with
++# both black and CMY cartridges installed
++#
++# This file has been automatically adapted to your system.
++%ifndef HAVE_GHOSTSCRIPT
++# However, since you didn't have GhostScript installed, most entries
++# are going to be rejects.
++%endif
++#
++/*
++ * Printer resolution
++ */
++%define DPI 300
++%define IS_COLOR 1
++/*
++ * PostScript
++ */
++%ifdef HAVE_GHOSTSCRIPT
++%define HANDLE_PS	filter	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=0 -dRetStatus=1 -dPapertype=0 -sOutputFile=- -
++%define HANDLE_PDF	fpipe	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=0 -dRetStatus=1 -dPapertype=0 -sOutputFile=- SFILE
++%endif
++/*
++ * PCL, PJL
++ */
++%define HANDLE_PCL	cat
++/*
++ * Text
++ */
++%define HANDLE_TEXT	cat     \eE\e&k2G\e(2N\e*o0M  \eE
++%define LATIN1_OK 1
++
++%include <stdconv.mh>
++
++# wild guess: PCL control codes start with <ESC>
++0	\033		HANDLE_PCL
++
++# Default entry -- for normal (text) files.  MUST BE LAST.
++default			HANDLE_TEXT
+--- magicfilter-1.2.orig/filters/hpdj-econo-filter.x
++++ magicfilter-1.2/filters/hpdj-econo-filter.x
+@@ -0,0 +1,40 @@
++%include <filters.h>
++#
++# Magic filter setup file for HP DeskJet 600 C series color printers with
++# both black and CMY cartridges installed
++#
++# This file has been automatically adapted to your system.
++%ifndef HAVE_GHOSTSCRIPT
++# However, since you didn't have GhostScript installed, most entries
++# are going to be rejects.
++%endif
++#
++/*
++ * Printer resolution
++ */
++%define DPI 300
++%define IS_COLOR 1
++/*
++ * PostScript
++ */
++%ifdef HAVE_GHOSTSCRIPT
++%define HANDLE_PS	filter	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=-1 -dRetStatus=1 -dPapertype=0 -sOutputFile=- -
++%define HANDLE_PDF	fpipe	PATH_GHOSTSCRIPT -q -dSAFER -dNOPAUSE -r300 -sDEVICE=cdj670 -dQuality=-1 -dRetStatus=1 -dPapertype=0 -sOutputFile=- $FILE
++%endif
++/*
++ * PCL, PJL
++ */
++%define HANDLE_PCL	cat
++/*
++ * Text
++ */
++%define HANDLE_TEXT	cat     \eE\e&k2G\e(2N\e*o-1M \eE
++%define LATIN1_OK 1
++
++%include <stdconv.mh>
++
++# wild guess: PCL control codes start with <ESC>
++0	\033		HANDLE_PCL
++
++# Default entry -- for normal (text) files.  MUST BE LAST.
++default			HANDLE_TEXT
