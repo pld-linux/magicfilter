@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	2d
+Release:	3d
 Group:		Utilities/Printing
 Group(pl):	Narzêdzia/Drukowanie
 Copyright:	GPL
@@ -40,22 +40,25 @@ install filters/*-filter $RPM_BUILD_ROOT/etc/magicfilter
 strip $RPM_BUILD_ROOT/usr/sbin/magicfilter
 
 gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
-gzip -9nf QuickInst ChangeLog TODO
+bzip2 -9  QuickInst ChangeLog TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644, root, root, 755)
-%doc QuickInst.gz ChangeLog.gz TODO.gz
+%doc {QuickInst,ChangeLog,TODO}.bz2
 
-%attr(755, root, root) /usr/sbin/*
-%attr(644, root, man)  /usr/man/man*/*
-%attr(755,root,root) %config(noreplace) /etc/magicfilter/*
+%attr(755,root, root) /usr/sbin/*
+
 %dir /etc/magicfilter
+%attr(755,root,root) %config(noreplace) /etc/magicfilter/*
+
+%attr(644,root, man)  /usr/man/man*/*
 
 %changelog
 * Sat Feb 13 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
+  [1.2-3d]
 - added patch from Debian
 - rewrited %install
 - few others modifications
