@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	3d
+Release:	4
 Group:		Utilities/Printing
 Group(pl):	Narzêdzia/Drukowanie
 Copyright:	GPL
@@ -10,7 +10,7 @@ Source:		%{name}-%{version}.tar.gz
 Patch:		%{name}_1.2-28.diff.gz
 Requires:	lpr
 Obsoletes:	apsfilter
-BuildRoot:   	/tmp/buildroot-%{name}-%{version}
+BuildRoot:   	/tmp/%{name}-%{version}-root
 
 %description
 Magicfilter is a customizable, extensible automatic printer filter.
@@ -39,36 +39,39 @@ install filters/*-filter $RPM_BUILD_ROOT/etc/magicfilter
 
 strip $RPM_BUILD_ROOT/usr/sbin/magicfilter
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
-bzip2 -9  QuickInst ChangeLog TODO
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* QuickInst ChangeLog TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, root, 755)
-%doc {QuickInst,ChangeLog,TODO}.bz2
-
-%attr(755,root, root) /usr/sbin/*
-
+%defattr(644,root,root,755)
+%doc {QuickInst,ChangeLog,TODO}.gz
 %dir /etc/magicfilter
-%attr(755,root,root) %config(noreplace) /etc/magicfilter/*
 
-%attr(644,root, man)  /usr/man/man*/*
+%attr(755,root,root) /usr/sbin/*
+%attr(755,root,root) %config(noreplace) /etc/magicfilter/*
+/usr/man/man*/*
 
 %changelog
+* Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [1.2-4]
+- sloted BuildRoot into PLD standard
+- removed man group from man pages
+- gzipping documentation (instead bzipping)
+
 * Sat Feb 13 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
   [1.2-3d]
 - added patch from Debian
 - rewrited %install
 - few others modifications
 
-* Mon Feb  8 1999 Micha³ Kuratczyk <kurkens@polbox.com>
+* Mon Feb  8 1999 Micha³ Kuratczyk <kura@pld.org.pl>
   [1.2-2]
 - added %attr(644, root, man) for man pages
 - simpilification in %files
 - removed Copying from %doc (GPL)
 - added gzipping documentation
 
-* Sun Feb  7 1999 Micha³ Kuratczyk <kurkens@polbox.com>
+* Sun Feb  7 1999 Micha³ Kuratczyk <kura@pld.org.pl>
 - initial rpm release
