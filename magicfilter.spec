@@ -6,6 +6,7 @@ Release:	8
 Group:		Applications/Printing
 License:	GPL
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
+# Source0-md5:	dcece221e363ca5dbc79bdd84713c04e
 Patch0:		%{name}_1.2-28.diff.gz
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-hpdj.patch
