@@ -11,7 +11,7 @@ Patch0:		magicfilter_1.2-28.diff.gz
 Patch1:		magicfilter-DESTDIR.patch
 Requires:	lpr
 Obsoletes:	apsfilter
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define	_sysconfdir	/etc
 
