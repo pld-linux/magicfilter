@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	7
+Release:	8
 Group:		Applications/Printing
 License:	GPL
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
@@ -28,7 +28,7 @@ Requires:	libtiff-progs
 Requires:	netpbm-progs
 Requires:	tetex-dvips
 Requires:	transfig
-Requires:	lpr
+Requires:	/usr/bin/lpr
 Requires:	smtpdaemon
 Obsoletes:	apsfilter
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
