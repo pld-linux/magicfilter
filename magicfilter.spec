@@ -64,10 +64,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/%{name}/*
 %{_mandir}/man*/*
-
-%changelog
-* Wed Jun 2 1999 Piotr Czerwiñski <pius@pld.org.pl> 
-  [1.2-5]
-- package is FHS 2.0 compliant,
-- spec file written by Micha³ Kuratczyk <kura@pld.org.pl>
-  and Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>.
