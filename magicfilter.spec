@@ -39,7 +39,7 @@ install filters/*-filter $RPM_BUILD_ROOT/etc/magicfilter
 
 strip $RPM_BUILD_ROOT/usr/sbin/magicfilter
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* QuickInst ChangeLog TODO
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* QuickInst ChangeLog TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /usr/sbin/*
 %attr(755,root,root) %config(noreplace) /etc/magicfilter/*
-/usr/man/man*/*
+%{_mandir}/man*/*
 
 %changelog
 * Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
