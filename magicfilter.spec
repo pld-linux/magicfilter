@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	8
+Release:	9
 Group:		Applications/Printing
 License:	GPL
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
@@ -48,7 +48,8 @@ drukarek.
 %patch2 -p1
 
 %build
-CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
+CFLAGS="%{rpmcflags}" \
+LDFLAGS="%{rpmldflags}" \
 ./configure %{_target_platform} \
 	--prefix=%{_prefix} \
 	--bindir=%{_sbindir} \
