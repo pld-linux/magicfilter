@@ -2,7 +2,7 @@ Summary:	Printer filters
 Summary(pl):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
-Release:	1
+Release:	2
 Group:		Utilities/Printing
 Group(pl):	Narzêdzia/Drukowanie
 Copyright:	GPL
@@ -37,18 +37,26 @@ install magicfilter.man $RPM_BUILD_ROOT/usr/man/man8
 mv filters $RPM_BUILD_ROOT/usr/share/magicfilter
 
 gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
+gzip -9nf README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644, root, root, 755)
-%doc COPYING ChangeLog README
+%doc README ChangeLog
 
 %attr(755, root, root) /usr/bin/*
-/usr/share/magicfilter/*
-/usr/man/man*/*
+%attr(644, root, man)  /usr/man/man*/*
+/usr/share/magicfilter
 
 %changelog
+* Mon Feb  8 1999 Micha³ Kuratczyk <kurkens@polbox.com>
+  [1.2-2]
+- added %attr(644, root, man) for man pages
+- simpilification in %files
+- removed Copying from %doc (GPL)
+- added gzipping documentation
+
 * Sun Feb  7 1999 Micha³ Kuratczyk <kurkens@polbox.com>
 - initial rpm release
