@@ -40,7 +40,7 @@ make
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,%{_sysconfdir}/%{name}}
 
-make install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	bindir=%{_sbindir} \
 	mandir=%{_mandir}/man8
