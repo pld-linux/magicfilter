@@ -68,7 +68,6 @@ rm -rf $RPM_BUILD_ROOT
 
 * Mon Feb  8 1999 Micha³ Kuratczyk <kura@pld.org.pl>
   [1.2-2]
-- added %attr(644, root, man) for man pages
 - simpilification in %files
 - removed Copying from %doc (GPL)
 - added gzipping documentation
