@@ -34,7 +34,7 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	--bindir=%{_sbindir} \
 	--mandir=%{_mandir}/man8
 
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
