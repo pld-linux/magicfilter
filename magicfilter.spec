@@ -10,7 +10,20 @@ License:	GPL
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
 Patch0:		%{name}_1.2-28.diff.gz
 Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-hpdj.patch
+BuildRequires:	ghostscript
+BuildRequires:	groff
+BuildRequires:	gzip
+BuildRequires:	libjpeg-progs
+BuildRequires:	libtiff-progs
+BuildRequires:	netpbm-progs
+BuildRequires:	transfig
+Requires:	ghostscript
+Requires:	groff
+Requires:	gzip
+Requires:	libjpeg-progs
+Requires:	libtiff-progs
+Requires:	netpbm-progs
+Requires:	transfig
 Requires:	lpr
 Obsoletes:	apsfilter
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -26,7 +39,6 @@ drukarek.
 %setup -q
 %patch0 -p1
 %patch1 -p0
-%patch2 -p1
 
 %build
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
@@ -35,7 +47,7 @@ CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
 	--bindir=%{_sbindir} \
 	--mandir=%{_mandir}/man8
 
-%{__make} bindir=%{_sbindir}
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
