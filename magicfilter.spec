@@ -7,7 +7,7 @@ Group:		Applications/Printing
 Group(de):	Applikationen/Drucken
 Group(pl):	Aplikacje/Drukowanie
 License:	GPL
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://sunsite.unc.edu/pub/Linux/system/printing/%{name}-%{version}.tar.gz
 Patch0:		%{name}_1.2-28.diff.gz
 Patch1:		%{name}-DESTDIR.patch
 Requires:	lpr
