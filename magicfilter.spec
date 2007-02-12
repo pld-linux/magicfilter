@@ -1,5 +1,5 @@
 Summary:	Printer filters
-Summary(pl):	Filtry dla drukarek
+Summary(pl.UTF-8):   Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
 Release:	9
@@ -37,8 +37,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Magicfilter is a customizable, extensible automatic printer filter.
 
-%description -l pl
-Magicfilter jest konfigurowalnym i rozszerzalnym zbiorem filtrów dla
+%description -l pl.UTF-8
+Magicfilter jest konfigurowalnym i rozszerzalnym zbiorem filtrÃ³w dla
 drukarek.
 
 %prep
