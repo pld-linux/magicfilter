@@ -1,5 +1,5 @@
 Summary:	Printer filters
-Summary(pl.UTF-8):   Filtry dla drukarek
+Summary(pl.UTF-8):	Filtry dla drukarek
 Name:		magicfilter
 Version:	1.2
 Release:	9
