@@ -1,24 +1,65 @@
---- Makefile.in~	Tue Mar 28 07:18:39 1995
-+++ Makefile.in	Wed Jun  2 21:49:20 1999
-@@ -57,8 +57,8 @@
- 	cd filters; make
+--- Orc-magicfilter-39e8faf/Makefile.in.orig	2009-11-23 04:45:02.000000000 +0100
++++ Orc-magicfilter-39e8faf/Makefile.in	2011-04-16 14:09:45.130653438 +0200
+@@ -44,46 +44,46 @@
+ 	@MAKE_MAGIC@ magic
  
- install: magicfilter magicfilter.man
--	${INSTALL_EXEC} magicfilter ${bindir}/magicfilter
--	${INSTALL_DATA} magicfilter.man ${mandir}/magicfilter.${mansec}
-+	${INSTALL_EXEC} magicfilter $(DESTDIR)${bindir}/magicfilter
-+	${INSTALL_DATA} magicfilter.man $(DESTDIR)${mandir}/magicfilter.${mansec}
+ commoninstall: textonly @CFMAGIC@
+-	@INSTALL_DIR@ $(prefix)/@exedir@
+-	@INSTALL_DIR@ $(prefix)/@mandir@/man8
+-	@INSTALL_DIR@ $(prefix)/@mandir@/man5
+-	@INSTALL_DIR@ $(prefix)/@filterdir@
+-	@INSTALL_MAGIC@ -m 444 file/magic $(prefix)/@MAGIC@
+-	@INSTALL_PROGRAM@ -m 511 textonly $(prefix)/@filterdir@
++	@INSTALL_DIR@ $(DESTDIR)$(prefix)/@exedir@
++	@INSTALL_DIR@ $(DESTDIR)$(prefix)/@mandir@/man8
++	@INSTALL_DIR@ $(DESTDIR)$(prefix)/@mandir@/man5
++	@INSTALL_DIR@ $(DESTDIR)$(prefix)/@filterdir@
++	@INSTALL_MAGIC@ -m 444 file/magic $(DESTDIR)$(prefix)/@MAGIC@
++	@INSTALL_PROGRAM@ -m 511 textonly $(DESTDIR)$(prefix)/@filterdir@
  
- install_filters:
- 	cd filters; make install
---- filters/Makefile.in~	Wed Jun  2 21:46:59 1999
-+++ filters/Makefile.in	Wed Jun  2 21:50:51 1999
-@@ -69,7 +69,7 @@
+ install:  @DO_WHAT@
  
- install: all
- 	for filter in ${FILTERS}; do \
--		${INSTALL_EXEC} $$filter ${bindir}/$$filter; \
-+		${INSTALL_EXEC} $$filter $(DESTDIR)${bindir}/$$filter; \
+ install-bin-t: traditional commoninstall
+-	@INSTALL_PROGRAM@ -m 511 traditional $(prefix)/@exedir@/magicfilter-t
++	@INSTALL_PROGRAM@ -m 511 traditional $(DESTDIR)$(prefix)/@exedir@/magicfilter-t
+ 
+ install-bin: magicfilter commoninstall
+-	@INSTALL_PROGRAM@ -m 511 magicfilter $(prefix)/@exedir@
++	@INSTALL_PROGRAM@ -m 511 magicfilter $(DESTDIR)$(prefix)/@exedir@
+ 
+ install-data-t: traditional commoninstall
+ 	@srcdir@/mkmpp
+ 	for x in @srcdir@/filters/*.def;do \
+-	    ./mpp @exedir@/magicfilter-t $$x > $(prefix)/@filterdir@/`basename $$x .def`-filter; \
+-	    chmod +x $(prefix)/@filterdir@/`basename $$x .def`-filter; \
++	    ./mpp @exedir@/magicfilter-t $$x > $(DESTDIR)$(prefix)/@filterdir@/`basename $$x .def`-filter; \
++	    chmod +x $(DESTDIR)$(prefix)/@filterdir@/`basename $$x .def`-filter; \
+ 	done
+ 	@rm -f mpp
+ 
+ install-data: magicfilter commoninstall
+ 	for x in @srcdir@/filters/*.def;do \
+-	    sed -e 's,@MAGIC''FILTER@,@exedir@/magicfilter,' < $$x > $(prefix)/@filterdir@/`basename $$x .def`; \
+-	    chmod +x $(prefix)/@filterdir@/`basename $$x .def`; \
++	    sed -e 's,@MAGIC''FILTER@,@exedir@/magicfilter,' < $$x > $(DESTDIR)$(prefix)/@filterdir@/`basename $$x .def`; \
++	    chmod +x $(DESTDIR)$(prefix)/@filterdir@/`basename $$x .def`; \
  	done
  
- clean:
+ install-man: VERSION commoninstall
+ 	@SED@ -n -e 's/&PROGRAM&/magicfilter/g' -e 's/^MAN //p' -e @LPD_OPTS@ < magicfilter.8templ > $$$$; \
+-	@INSTALL_DATA@ -m 444 $$$$ $(prefix)/@mandir@/man8/magicfilter.8; \
++	@INSTALL_DATA@ -m 444 $$$$ $(DESTDIR)$(prefix)/@mandir@/man8/magicfilter.8; \
+ 	rm -f $$$$
+-	@INSTALL_DATA@ -m 444 magicfilter.5 $(prefix)/@mandir@/man5
++	@INSTALL_DATA@ -m 444 magicfilter.5 $(DESTDIR)$(prefix)/@mandir@/man5
+ 
+ install-man-t: VERSION commoninstall
+ 	@SED@ -n -e 's/&PROGRAM&/magicfilter-t/g' -e 's/^MAN //p' -e 's/^TRAD//p' -e @LPD_OPTS@ < magicfilter.8templ > $$$$; \
+-	@INSTALL_DATA@ -m 444 $$$$ $(prefix)/@mandir@/man8/magicfilter-t.8; \
++	@INSTALL_DATA@ -m 444 $$$$ $(DESTDIR)$(prefix)/@mandir@/man8/magicfilter-t.8; \
+ 	rm -f $$$$
+-	@INSTALL_DATA@ -m 444 magicfilter-t.5 $(prefix)/@mandir@/man5
++	@INSTALL_DATA@ -m 444 magicfilter-t.5 $(DESTDIR)$(prefix)/@mandir@/man5
+ 
+ install-traditional: install-man-t install-bin-t install-data-t
+ 

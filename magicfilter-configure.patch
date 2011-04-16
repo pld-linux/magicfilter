@@ -1,0 +1,65 @@
+--- Orc-magicfilter-39e8faf/configure.sh.orig	2009-11-23 04:45:02.000000000 +0100
++++ Orc-magicfilter-39e8faf/configure.sh	2011-04-16 14:55:24.624078447 +0200
+@@ -118,14 +118,6 @@
+ # AC_PROG_LN_S
+ # AC_PROG_YACC
+ 
+-if [ ! "$WITH_LPRNG" ]; then
+-    S=`lpq -V 2>/dev/null | head -1 | grep -i lprng`
+-
+-    if [ "$S" ]; then
+-	LOG "Found LPRng -- building stupid filters"
+-	WITH_LPRNG=1
+-    fi
+-fi
+ if [ "$WITH_LPRNG" ]; then
+     AC_SUB    "LPD_OPTS" "'s/^LPNG//p'"
+     AC_DEFINE "WITH_LPRNG" "1"
+@@ -191,14 +183,6 @@
+     fi
+ fi
+ 
+-if [ "${CF_PSTEXT:-$CF_NENSCRIPT}" -a "$paper" ]; then
+-    PROG=${CF_PSTEXT:-$CF_NENSCRIPT}
+-    if ! $PROG -T$paper </dev/null; then
+-	AC_FAIL "$PROG cannot write to $paper sized paper"
+-	unset paper
+-    fi
+-fi
+-
+ test "$paper" && AC_DEFINE PAPERSIZE \"$WITH_PAPERSIZE\"
+ 
+ MF_PATH_INCLUDE GZIP gzip gzcat || MF_PATH_INCLUDE ZCAT zcat
+@@ -215,7 +199,6 @@
+ MF_PATH_INCLUDE BMPTOPPM bmptopnm bmptoppm
+ MF_PATH_INCLUDE RASTTOPNM rasttopnm
+ MF_PATH_INCLUDE FIG2DEV fig2dev
+-MF_PATH_INCLUDE ACROREAD acroread
+  
+ # MF_PROG_GNU_ZCAT($ZCAT)
+ 
+--- Orc-magicfilter-39e8faf/configure.inc.orig	2009-11-23 04:45:02.000000000 +0100
++++ Orc-magicfilter-39e8faf/configure.inc	2011-04-16 15:30:34.920815702 +0200
+@@ -859,7 +859,7 @@
+     fi
+ 
+     AC_SUB 'INSTALL' "$PROG_INSTALL"
+-    AC_SUB 'INSTALL_PROGRAM' "$PROG_INSTALL -s -m 755"
++    AC_SUB 'INSTALL_PROGRAM' "$PROG_INSTALL -m 755"
+     AC_SUB 'INSTALL_DATA' "$PROG_INSTALL -m 444"
+ 
+     # finally build a little directory installer
+--- Orc-magicfilter-39e8faf/magic.m4.in.orig	2009-11-23 04:45:02.000000000 +0100
++++ Orc-magicfilter-39e8faf/magic.m4.in	2011-04-16 22:35:29.635002818 +0200
+@@ -47,9 +47,9 @@
+ ifelse(defn(`PSfilter'),reject,,
+ define(PSfromText, 
+ 	`ifdef(`PATH_PSTEXT',
+-	    pipe/postscript/ PATH_PSTEXT ifdef(`papersize',`-T'papersize,),
++	    pipe/postscript/ PATH_PSTEXT ifdef(`papersize',`-M'papersize,),
+ 	    `ifdef(`PATH_NENSCRIPT',
+-		pipe/postscript/ PATH_NENSCRIPT ifdef(`papersize',`-T'papersize,) @NENSCRIPT_QUIET@ -p -,
++		pipe/postscript/ PATH_NENSCRIPT ifdef(`papersize',`-M'papersize,) @NENSCRIPT_QUIET@ -p -,
+ 		    reject)')')dnl
+ 
+ #
