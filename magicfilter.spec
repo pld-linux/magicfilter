@@ -30,6 +30,7 @@ Requires:	file
 Requires:	ghostscript
 Requires:	gzip
 Requires:	libjpeg-progs
+Requires:	m4
 Requires:	ncompress
 Requires:	netpbm-progs
 Requires:	tetex-dvips
