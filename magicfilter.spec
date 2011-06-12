@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Filtry dla drukarek
 Name:		magicfilter
 Version:	2.3.i
 %define	gitver	39e8faf
-Release:	1
+Release:	2
 Group:		Applications/Printing
 License:	BSD (magicfilter itself), GPL (man pages), Public Domain (filters)
 Source0:	http://github.com/Orc/magicfilter/tarball/v%{version}/%{name}-%{version}.tar.gz
@@ -42,9 +42,17 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Magicfilter is a customizable, extensible automatic printer filter.
 
+Note: for LPRng use "-$ /etc/magicfilter/PRINTERTYPE" as filter
+command (note the starting "-$" prefix) to avoid passing extraneous
+options.
+
 %description -l pl.UTF-8
 Magicfilter jest konfigurowalnym i rozszerzalnym zbiorem filtrów dla
 drukarek.
+
+Uwaga: w przypadku używania z LPRng jako polecenie filtra należy
+podawać "-$ /etc/magicfilter/TYPDRUKARKI" (z przedrostkiem "-$")
+w celu pominięcia nadmiarowych opcji.
 
 %prep
 %setup -q -n Orc-magicfilter-%{gitver}

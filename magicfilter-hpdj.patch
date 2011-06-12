@@ -34,3 +34,14 @@
 +define(DEVICE,`cdj670')dnl
 +define(PS_OPTIONS,`-dQuality=-1 -dRetStatus=1')dnl
 +define(HANDLE_TEXT,`cat	\eE\e&k2G\e(2N\e*o-1M \eE')dnl
+--- Orc-magicfilter-39e8faf/filters/psc1100.def.orig	1970-01-01 01:00:00.000000000 +0100
++++ Orc-magicfilter-39e8faf/filters/psc1100.def	2011-04-16 14:23:34.647347879 +0200
+@@ -0,0 +1,8 @@
++#! @MAGICFILTER@
++define(Vendor, `Hewlett-Packard')dnl
++define(Printer, `psc 1100 series color printers')dnl
++define(DPI,`300')dnl
++define(COLOR,`true')dnl
++define(PCL,`true')dnl
++define(DEVICE,`ijs')dnl
++define(PS_OPTIONS,`-sIjsServer=hpijs -dIjsUseOutputFD -sDeviceManufacturer=HP -sDeviceModel="psc 1100 series" -dDuplex=false -dTumble=false')dnl
