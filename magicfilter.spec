@@ -56,9 +56,9 @@ w celu pominięcia nadmiarowych opcji.
 
 %prep
 %setup -q -n Orc-magicfilter-%{gitver}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 %build
 CC="%{__cc}" \
